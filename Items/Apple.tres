@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Item" load_steps=3 format=3 uid="uid://r5klama5tjra"]
+
+[ext_resource type="Script" path="res://Items/Script/Item.gd" id="1_2iq1m"]
+[ext_resource type="Texture2D" uid="uid://csl4cgm2fx18l" path="res://Assets/Apple.png" id="2_fk0rx"]
+
+[resource]
+script = ExtResource("1_2iq1m")
+name = "Apple"
+texture = ExtResource("2_fk0rx")
+price = ""

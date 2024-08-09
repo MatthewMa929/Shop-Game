@@ -1,29 +1,25 @@
-[gd_scene load_steps=6 format=3 uid="uid://bxwq5kwc6suep"]
+[gd_scene load_steps=5 format=3 uid="uid://bxwq5kwc6suep"]
 
 [ext_resource type="Script" path="res://UI/ui.gd" id="1_ns144"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2irrk"]
 bg_color = Color(0.0862745, 0.0980392, 0.145098, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4w7no"]
-corner_radius_top_left = 2
-corner_radius_top_right = 2
-corner_radius_bottom_right = 2
-corner_radius_bottom_left = 2
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_carr2"]
 corner_radius_top_left = 2
 corner_radius_top_right = 2
 corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
+anti_aliasing = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vccoj"]
 corner_radius_top_left = 2
 corner_radius_top_right = 2
 corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
+anti_aliasing = false
 
-[node name="UI" type="Control"]
+[node name="UI" type="Control" node_paths=PackedStringArray("stock_ui")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -31,6 +27,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ns144")
+stock_ui = NodePath("Background/MarginContainer/VBoxContainer/StockUI")
 
 [node name="Background" type="PanelContainer" parent="."]
 custom_minimum_size = Vector2(320, 180)
@@ -50,31 +47,49 @@ theme_override_constants/margin_bottom = 4
 layout_mode = 2
 theme_override_constants/separation = 5
 
-[node name="Information" type="PanelContainer" parent="Background/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 20)
+[node name="MarginContainer" type="MarginContainer" parent="Background/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 15)
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_4w7no")
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 8
 
-[node name="MarginContainer" type="MarginContainer" parent="Background/MarginContainer/VBoxContainer/Information"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Background/MarginContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 4
+theme_override_constants/separation = 100
 
-[node name="Event" type="RichTextLabel" parent="Background/MarginContainer/VBoxContainer/Information/MarginContainer"]
+[node name="Event" type="RichTextLabel" parent="Background/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
-theme_override_font_sizes/normal_font_size = 10
+theme_override_font_sizes/normal_font_size = 8
 bbcode_enabled = true
 text = "Event:"
+scroll_active = false
 
-[node name="Stock" type="PanelContainer" parent="Background/MarginContainer/VBoxContainer"]
+[node name="Money" type="RichTextLabel" parent="Background/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "$"
+scroll_active = false
+
+[node name="StockUI" type="PanelContainer" parent="Background/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_carr2")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Background/MarginContainer/VBoxContainer"]
+[node name="Bottom" type="HBoxContainer" parent="Background/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/separation = 10
 
-[node name="BuySell" type="PanelContainer" parent="Background/MarginContainer/VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(250, 30)
+[node name="BuySell" type="PanelContainer" parent="Background/MarginContainer/VBoxContainer/Bottom"]
+custom_minimum_size = Vector2(260, 30)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_vccoj")
+
+[node name="Reroll" type="Button" parent="Background/MarginContainer/VBoxContainer/Bottom"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+
+[connection signal="pressed" from="Background/MarginContainer/VBoxContainer/Bottom/Reroll" to="." method="_on_reroll_pressed"]
