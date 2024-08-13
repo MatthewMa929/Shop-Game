@@ -1,11 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://7pyfo2tnkt2w"]
+[gd_scene load_steps=3 format=3 uid="uid://7pyfo2tnkt2w"]
 
 [ext_resource type="Script" path="res://Stock/stock_manager.gd" id="1_aaonw"]
-[ext_resource type="Resource" uid="uid://r5klama5tjra" path="res://Items/Apple.tres" id="2_s3yyy"]
-[ext_resource type="Resource" uid="uid://c0ddg2wwn3b5c" path="res://Items/Sword.tres" id="3_uor0a"]
+[ext_resource type="PackedScene" uid="uid://dop5m6g0boiwb" path="res://Items/ItemManagers/item_preloader.tscn" id="2_6037i"]
 
 [node name="StockManager" type="Node2D"]
 script = ExtResource("1_aaonw")
 
-[node name="ItemPreloader" type="ResourcePreloader" parent="."]
-resources = [PackedStringArray("Apple", "Sword"), [ExtResource("2_s3yyy"), ExtResource("3_uor0a")]]
+[node name="ItemPreloader" parent="." instance=ExtResource("2_6037i")]

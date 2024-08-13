@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://2htm65stkrcw"]
+[gd_scene load_steps=6 format=3 uid="uid://2htm65stkrcw"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_hc2pr"]
 [ext_resource type="PackedScene" uid="uid://bxwq5kwc6suep" path="res://UI/ui.tscn" id="2_jvcmq"]
 [ext_resource type="PackedScene" uid="uid://7pyfo2tnkt2w" path="res://Stock/stock_manager.tscn" id="3_xtosj"]
+[ext_resource type="PackedScene" uid="uid://dgeqvxl46kcwx" path="res://Package/package_manager.tscn" id="4_7sg5x"]
+[ext_resource type="PackedScene" uid="uid://35tvs1ylk5tr" path="res://Items/ItemManagers/item_display.tscn" id="5_khbw6"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_hc2pr")
@@ -10,3 +12,14 @@ script = ExtResource("1_hc2pr")
 [node name="UI" parent="." instance=ExtResource("2_jvcmq")]
 
 [node name="StockManager" parent="." instance=ExtResource("3_xtosj")]
+
+[node name="PackageManager" parent="." instance=ExtResource("4_7sg5x")]
+
+[node name="ItemDisplay" parent="." instance=ExtResource("5_khbw6")]
+
+[connection signal="bunch_bought" from="UI" to="PackageManager" method="_on_ui_bunch_bought"]
+[connection signal="reroll_pressed" from="UI" to="PackageManager" method="_on_ui_reroll_pressed"]
+[connection signal="item_received" from="StockManager" to="ItemDisplay" method="_on_stock_manager_item_received"]
+[connection signal="bunch_to_stock" from="PackageManager" to="StockManager" method="_on_package_manager_bunch_to_stock"]
+[connection signal="display_bunch" from="PackageManager" to="ItemDisplay" method="_on_package_manager_display_bunch"]
+[connection signal="change_bunch_cost" from="ItemDisplay" to="UI" method="_on_item_display_change_bunch_cost"]

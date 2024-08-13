@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://35tvs1ylk5tr"]
+
+[ext_resource type="Script" path="res://Items/ItemManagers/item_display.gd" id="1_5quiq"]
+[ext_resource type="PackedScene" uid="uid://dop5m6g0boiwb" path="res://Items/ItemManagers/item_preloader.tscn" id="2_meycl"]
+
+[node name="ItemDisplay" type="Node2D"]
+script = ExtResource("1_5quiq")
+
+[node name="ItemSpr" type="Sprite2D" parent="."]
+
+[node name="ItemPreloader" parent="." instance=ExtResource("2_meycl")]

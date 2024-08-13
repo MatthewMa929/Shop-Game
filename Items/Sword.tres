@@ -7,4 +7,4 @@
 script = ExtResource("1_agkau")
 name = "Sword"
 texture = ExtResource("2_xs83p")
-price = ""
+price = 10

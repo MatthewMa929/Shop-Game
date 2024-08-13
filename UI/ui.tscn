@@ -1,11 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://bxwq5kwc6suep"]
+[gd_scene load_steps=9 format=3 uid="uid://bxwq5kwc6suep"]
 
 [ext_resource type="Script" path="res://UI/ui.gd" id="1_ns144"]
+[ext_resource type="Texture2D" uid="uid://bdie7epxfcl1g" path="res://Assets/reroll.png" id="2_4rnqh"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2irrk"]
 bg_color = Color(0.0862745, 0.0980392, 0.145098, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_carr2"]
+bg_color = Color(1, 0.937255, 0.854902, 1)
 corner_radius_top_left = 2
 corner_radius_top_right = 2
 corner_radius_bottom_right = 2
@@ -13,13 +15,34 @@ corner_radius_bottom_left = 2
 anti_aliasing = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vccoj"]
+bg_color = Color(1, 0.937255, 0.854902, 1)
 corner_radius_top_left = 2
 corner_radius_top_right = 2
 corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
 anti_aliasing = false
 
-[node name="UI" type="Control" node_paths=PackedStringArray("stock_ui")]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7wkje"]
+bg_color = Color(0.882353, 0.690196, 0.352941, 1)
+corner_radius_top_left = 2
+corner_radius_bottom_left = 2
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7gv4b"]
+bg_color = Color(0.176471, 0.231373, 0.541176, 1)
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xa0ij"]
+bg_color = Color(0.364706, 0.619608, 0.87451, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+anti_aliasing = false
+
+[node name="UI" type="Control" node_paths=PackedStringArray("stock_ui", "money_ui", "event_ui", "amt_ui", "price_ui")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -28,6 +51,10 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ns144")
 stock_ui = NodePath("Background/MarginContainer/VBoxContainer/StockUI")
+money_ui = NodePath("Background/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/Money")
+event_ui = NodePath("Background/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/Event")
+amt_ui = NodePath("AddOns/Amt")
+price_ui = NodePath("Background/MarginContainer/VBoxContainer/Bottom/BuySell/MarginContainer/PanelContainer/MarginContainer/Price")
 
 [node name="Background" type="PanelContainer" parent="."]
 custom_minimum_size = Vector2(320, 180)
@@ -63,7 +90,7 @@ custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 8
 bbcode_enabled = true
-text = "Event:"
+text = "Event: None"
 scroll_active = false
 
 [node name="Money" type="RichTextLabel" parent="Background/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
@@ -71,7 +98,7 @@ custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 8
 bbcode_enabled = true
-text = "$"
+text = "[color=yellow]$"
 scroll_active = false
 
 [node name="StockUI" type="PanelContainer" parent="Background/MarginContainer/VBoxContainer"]
@@ -88,8 +115,72 @@ custom_minimum_size = Vector2(260, 30)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_vccoj")
 
-[node name="Reroll" type="Button" parent="Background/MarginContainer/VBoxContainer/Bottom"]
+[node name="MarginContainer" type="MarginContainer" parent="Background/MarginContainer/VBoxContainer/Bottom/BuySell"]
+layout_mode = 2
+theme_override_constants/margin_right = 225
+
+[node name="PanelContainer" type="PanelContainer" parent="Background/MarginContainer/VBoxContainer/Bottom/BuySell/MarginContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_7wkje")
+
+[node name="MarginContainer" type="MarginContainer" parent="Background/MarginContainer/VBoxContainer/Bottom/BuySell/MarginContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 5
+
+[node name="Price" type="RichTextLabel" parent="Background/MarginContainer/VBoxContainer/Bottom/BuySell/MarginContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 14
+bbcode_enabled = true
+text = "$15"
+
+[node name="MarginContainer2" type="MarginContainer" parent="Background/MarginContainer/VBoxContainer/Bottom/BuySell"]
+layout_mode = 2
+theme_override_constants/margin_left = 220
+
+[node name="PanelContainer" type="PanelContainer" parent="Background/MarginContainer/VBoxContainer/Bottom/BuySell/MarginContainer2"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_7gv4b")
+
+[node name="MarginContainer" type="MarginContainer" parent="Background/MarginContainer/VBoxContainer/Bottom/BuySell/MarginContainer2/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+
+[node name="Buy" type="RichTextLabel" parent="Background/MarginContainer/VBoxContainer/Bottom/BuySell/MarginContainer2/PanelContainer/MarginContainer"]
+layout_mode = 2
+text = "Buy"
+
+[node name="BuyButton" type="Button" parent="Background/MarginContainer/VBoxContainer/Bottom/BuySell/MarginContainer2/PanelContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="Background/MarginContainer/VBoxContainer/Bottom"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_xa0ij")
+
+[node name="RerollSpr" type="Sprite2D" parent="Background/MarginContainer/VBoxContainer/Bottom/PanelContainer"]
+position = Vector2(-1, -1)
+texture = ExtResource("2_4rnqh")
+centered = false
+
+[node name="Reroll" type="Button" parent="Background/MarginContainer/VBoxContainer/Bottom/PanelContainer"]
+modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 
-[connection signal="pressed" from="Background/MarginContainer/VBoxContainer/Bottom/Reroll" to="." method="_on_reroll_pressed"]
+[node name="AddOns" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Amt" type="RichTextLabel" parent="AddOns"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 0
+theme_override_font_sizes/normal_font_size = 6
+bbcode_enabled = true
+scroll_active = false
+
+[connection signal="pressed" from="Background/MarginContainer/VBoxContainer/Bottom/BuySell/MarginContainer2/PanelContainer/BuyButton" to="." method="_on_buy_button_pressed"]
+[connection signal="pressed" from="Background/MarginContainer/VBoxContainer/Bottom/PanelContainer/Reroll" to="." method="_on_reroll_pressed"]
