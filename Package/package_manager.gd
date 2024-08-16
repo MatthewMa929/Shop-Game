@@ -8,6 +8,7 @@ signal display_bunch(bunch: Array[Item])
 signal bunch_to_stock(bunch: Array[Item])
 
 var curr_bunch: Array[Item] = []
+var bunch_size = 5
 
 
 func get_random_item() -> Item:
@@ -16,7 +17,7 @@ func get_random_item() -> Item:
 	
 func create_bunch() -> Array[Item]:
 	curr_bunch.clear()
-	for i in range(3):
+	for i in range(bunch_size):
 		curr_bunch.append(get_random_item())
 	return curr_bunch
 

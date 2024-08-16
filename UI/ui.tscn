@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bxwq5kwc6suep"]
+[gd_scene load_steps=12 format=3 uid="uid://bxwq5kwc6suep"]
 
 [ext_resource type="Script" path="res://UI/ui.gd" id="1_ns144"]
 [ext_resource type="Texture2D" uid="uid://bdie7epxfcl1g" path="res://Assets/reroll.png" id="2_4rnqh"]
@@ -8,6 +8,30 @@ bg_color = Color(0.0862745, 0.0980392, 0.145098, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_carr2"]
 bg_color = Color(1, 0.937255, 0.854902, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q2vfa"]
+bg_color = Color(0.796078, 0.533333, 0.27451, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fpj74"]
+bg_color = Color(0.454902, 0.25098, 0.12549, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_355cf"]
+bg_color = Color(1, 1, 1, 1)
 corner_radius_top_left = 2
 corner_radius_top_right = 2
 corner_radius_bottom_right = 2
@@ -50,7 +74,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ns144")
-stock_ui = NodePath("Background/MarginContainer/VBoxContainer/StockUI")
+stock_ui = NodePath("Background/MarginContainer/VBoxContainer/HBoxContainer/StockUI")
 money_ui = NodePath("Background/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/Money")
 event_ui = NodePath("Background/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/Event")
 amt_ui = NodePath("AddOns/Amt")
@@ -101,10 +125,39 @@ bbcode_enabled = true
 text = "[color=yellow]$"
 scroll_active = false
 
-[node name="StockUI" type="PanelContainer" parent="Background/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 100)
+[node name="HBoxContainer" type="HBoxContainer" parent="Background/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="StockUI" type="PanelContainer" parent="Background/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(250, 100)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_carr2")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Background/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="PanelContainer" type="PanelContainer" parent="Background/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_q2vfa")
+
+[node name="PanelContainer2" type="PanelContainer" parent="Background/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_fpj74")
+
+[node name="MarginContainer" type="MarginContainer" parent="Background/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer2"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="Background/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer2/MarginContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_355cf")
 
 [node name="Bottom" type="HBoxContainer" parent="Background/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -160,11 +213,6 @@ custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_xa0ij")
 
-[node name="RerollSpr" type="Sprite2D" parent="Background/MarginContainer/VBoxContainer/Bottom/PanelContainer"]
-position = Vector2(-1, -1)
-texture = ExtResource("2_4rnqh")
-centered = false
-
 [node name="Reroll" type="Button" parent="Background/MarginContainer/VBoxContainer/Bottom/PanelContainer"]
 modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(30, 0)
@@ -181,6 +229,13 @@ layout_mode = 0
 theme_override_font_sizes/normal_font_size = 6
 bbcode_enabled = true
 scroll_active = false
+
+[node name="Sprites" type="Node2D" parent="."]
+
+[node name="RerollSpr" type="Sprite2D" parent="Sprites"]
+position = Vector2(279, 132)
+texture = ExtResource("2_4rnqh")
+centered = false
 
 [connection signal="pressed" from="Background/MarginContainer/VBoxContainer/Bottom/BuySell/MarginContainer2/PanelContainer/BuyButton" to="." method="_on_buy_button_pressed"]
 [connection signal="pressed" from="Background/MarginContainer/VBoxContainer/Bottom/PanelContainer/Reroll" to="." method="_on_reroll_pressed"]
